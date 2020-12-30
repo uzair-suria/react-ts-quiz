@@ -4,9 +4,9 @@ import { QuestionCard } from './components';
 const App: React.FunctionComponent = () => {
 	const startQuiz = async () => {};
 
-	const checkAnswer = (e: React.MouseEvent<HTMLButtonElement>) => {};
+	// const checkAnswer = (e: React.MouseEvent<HTMLButtonElement>) => {};
 
-	const nextQuestion = () => {};
+	// const nextQuestion = () => {};
 
 	return (
 		<div className="App">
