@@ -1,5 +1,7 @@
 import React from 'react';
 
+import parse from 'html-react-parser';
+
 type Props = {
 	question: string;
 	answers: string[];
@@ -22,12 +24,13 @@ const QuestionCard: React.FC<Props> = ({
 			<p className="number">
 				Question: {questionNumber} / {totalQuestions}
 			</p>
-			<p dangerouslySetInnerHTML={{ __html: question }} />
+			<p>{parse(question)}</p>
+			{/* <p dangerouslySetInnerHTML={{ __html: question }} /> */}
 			<div>
 				{answers.map((ans) => (
-					<div>
+					<div key={ans}>
 						<button disabled={userAnswer} onClick={callback}>
-							<span dangerouslySetInnerHTML={{ __html: ans }} />
+							<span>{parse(ans)}</span>
 						</button>
 					</div>
 				))}
