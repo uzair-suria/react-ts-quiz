@@ -9,7 +9,7 @@ import { QuestionCard } from './components';
 
 // Types
 
-type AnswerObject = {
+export type AnswerObject = {
 	question: string;
 	answer: string;
 	correct: boolean;
@@ -44,9 +44,34 @@ const App: React.FC = () => {
 		setLoading(false);
 	};
 
-	const checkAnswer = (e: React.MouseEvent<HTMLButtonElement>) => {};
+	const checkAnswer = (e: React.MouseEvent<HTMLButtonElement>) => {
+		if (!gameOver) {
+			// User Answer
+			const answer = e.currentTarget.value;
+			// Check Answer
+			const correct = questions[number].correct_answer === answer;
+			// Handle the result
+			if (correct) setScore((prev) => prev + 1);
+			// Save answer in the array "userAnswer"
+			const answerObject: AnswerObject = {
+				question: questions[number].question,
+				answer,
+				correct,
+				correctAnswer: questions[number].correct_answer,
+			};
+			setUserAnswers((prev) => [...prev, answerObject]);
+		}
+	};
 
-	const nextQuestion = () => {};
+	const nextQuestion = () => {
+		// move to next question if not at last question
+		const nextQuestion = number + 1;
+		if (nextQuestion === TOTAL_QUESTIONS) {
+			setGameOver(true);
+		} else {
+			setNumber(nextQuestion);
+		}
+	};
 
 	return (
 		<div className="App">
@@ -56,7 +81,7 @@ const App: React.FC = () => {
 					Start
 				</button>
 			) : null}
-			{!gameOver ? <p className="score">Score:</p> : null}
+			{!gameOver ? <p className="score">Score: {score}</p> : null}
 			{loading ? <p>Loading Questions...</p> : null}
 
 			{!loading && !gameOver ? (
