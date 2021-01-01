@@ -1,5 +1,4 @@
 import { arrayShuffle } from '../utils';
-import { Difficulty } from './';
 
 export type Question = {
 	category: string;
