@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { fetchQuizQuestions } from './api';
 import { QuestionState } from './api/fetchQuizQuestions';
 import { genreMap } from './api/questionGenre';
+import { GlobalStyle } from './App.style';
 
 // Components
 import { QuestionCard } from './components';
@@ -81,47 +82,50 @@ const App: React.FC = () => {
 	};
 
 	return (
-		<div className="App">
-			<h1>REACT QUIZ</h1>
-			{gameOver || userAnswers.length === TOTAL_QUESTIONS ? (
-				<>
-					<button className="start" onClick={startQuiz}>
-						Start
-					</button>
-					<label>
-						Select the Quiz Genre
-						<select value={genre} onChange={handleGenreChange}>
-							{genreKeys.map((key: string) => (
-								<option value={genreMap[key]} key={key}>
-									{key}
-								</option>
-							))}
-						</select>
-					</label>
-				</>
-			) : null}
-			{!gameOver ? <p className="score">Score: {score}</p> : null}
-			{loading ? <p>Loading Questions...</p> : null}
+		<>
+			<GlobalStyle />
+			<div className="App">
+				<h1>REACT QUIZ</h1>
+				{gameOver || userAnswers.length === TOTAL_QUESTIONS ? (
+					<>
+						<button className="start" onClick={startQuiz}>
+							Start
+						</button>
+						<label>
+							Select the Quiz Genre
+							<select value={genre} onChange={handleGenreChange}>
+								{genreKeys.map((key: string) => (
+									<option value={genreMap[key]} key={key}>
+										{key}
+									</option>
+								))}
+							</select>
+						</label>
+					</>
+				) : null}
+				{!gameOver ? <p className="score">Score: {score}</p> : null}
+				{loading ? <p>Loading Questions...</p> : null}
 
-			{!loading && !gameOver ? (
-				<QuestionCard
-					questionNumber={number + 1}
-					totalQuestions={TOTAL_QUESTIONS}
-					question={questions[number].question}
-					answers={questions[number].answers}
-					userAnswer={userAnswers ? userAnswers[number] : undefined}
-					callback={checkAnswer}
-				/>
-			) : null}
-			{!gameOver &&
-			!loading &&
-			userAnswers.length === number + 1 &&
-			number !== TOTAL_QUESTIONS - 1 ? (
-				<button className="next" onClick={nextQuestion}>
-					Next Question
-				</button>
-			) : null}
-		</div>
+				{!loading && !gameOver ? (
+					<QuestionCard
+						questionNumber={number + 1}
+						totalQuestions={TOTAL_QUESTIONS}
+						question={questions[number].question}
+						answers={questions[number].answers}
+						userAnswer={userAnswers ? userAnswers[number] : undefined}
+						callback={checkAnswer}
+					/>
+				) : null}
+				{!gameOver &&
+				!loading &&
+				userAnswers.length === number + 1 &&
+				number !== TOTAL_QUESTIONS - 1 ? (
+					<button className="next" onClick={nextQuestion}>
+						Next Question
+					</button>
+				) : null}
+			</div>
+		</>
 	);
 };
 
