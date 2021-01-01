@@ -4,7 +4,9 @@ import React, { useState } from 'react';
 import { fetchQuizQuestions } from './api';
 import { QuestionState } from './api/fetchQuizQuestions';
 import { genreMap } from './api/questionGenre';
-import { GlobalStyle } from './App.style';
+
+// Styles
+import { GenreSelector, GlobalStyle, Wrapper } from './App.style';
 
 // Components
 import { QuestionCard } from './components';
@@ -84,23 +86,23 @@ const App: React.FC = () => {
 	return (
 		<>
 			<GlobalStyle />
-			<div className="App">
+			<Wrapper>
 				<h1>REACT QUIZ</h1>
 				{gameOver || userAnswers.length === TOTAL_QUESTIONS ? (
 					<>
-						<button className="start" onClick={startQuiz}>
-							Start
-						</button>
 						<label>
 							Select the Quiz Genre
-							<select value={genre} onChange={handleGenreChange}>
+							<GenreSelector value={genre} onChange={handleGenreChange}>
 								{genreKeys.map((key: string) => (
 									<option value={genreMap[key]} key={key}>
 										{key}
 									</option>
 								))}
-							</select>
+							</GenreSelector>
 						</label>
+						<button className="start" onClick={startQuiz}>
+							Start
+						</button>
 					</>
 				) : null}
 				{!gameOver ? <p className="score">Score: {score}</p> : null}
@@ -124,7 +126,7 @@ const App: React.FC = () => {
 						Next Question
 					</button>
 				) : null}
-			</div>
+			</Wrapper>
 		</>
 	);
 };

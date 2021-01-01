@@ -4,6 +4,7 @@ import parse from 'html-react-parser';
 
 // Types
 import { AnswerObject } from '../App';
+import { QuestionCardWrapper, AnswerWrapper } from './Question.style';
 
 type Props = {
 	question: string;
@@ -23,7 +24,7 @@ const QuestionCard: React.FC<Props> = ({
 	totalQuestions,
 }) => {
 	return (
-		<div>
+		<QuestionCardWrapper>
 			<p className="number">
 				Question: {questionNumber} / {totalQuestions}
 			</p>
@@ -31,7 +32,11 @@ const QuestionCard: React.FC<Props> = ({
 			{/* <p dangerouslySetInnerHTML={{ __html: question }} /> */}
 			<div>
 				{answers.map((ans) => (
-					<div key={ans}>
+					<AnswerWrapper
+						key={ans}
+						correct={userAnswer?.correctAnswer === ans}
+						userClicked={userAnswer?.answer === ans}
+					>
 						<button
 							disabled={userAnswer ? true : false}
 							value={ans}
@@ -39,10 +44,10 @@ const QuestionCard: React.FC<Props> = ({
 						>
 							<span>{parse(ans)}</span>
 						</button>
-					</div>
+					</AnswerWrapper>
 				))}
 			</div>
-		</div>
+		</QuestionCardWrapper>
 	);
 };
 
